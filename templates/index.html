@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Open Sans', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .wrapper {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: linear-gradient(166.66deg, rgb(31, 117, 206) 4.62%, rgb(23, 121, 207) 4.62%, rgb(116, 75, 196) 86.29%);
+        }
+
+        .wrapper .form {
+            width: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+
+        .wrapper .form input {
+            margin: 10px 0px;
+            padding: 12px 15px;
+            width: 100%;
+            border: 0px solid;
+            /* border-bottom: 2px solid black; */
+            box-shadow: 0px 3px 7px 1px #0000001f;
+            outline: none;
+            transition: all .3s ease-in-out;
+            border: 1px solid rgba(0, 0, 0, 0);
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1.3px;
+            border-radius: 6px;
+            color: gray;
+
+        }
+
+        .wrapper .form input:focus {
+            border-bottom: 1px solid rgb(0 0 0 / 10%);
+            border-left: 1px solid rgba(0, 0, 0, 0.036);
+            border-right: 1px solid rgba(0, 0, 0, 0.036);
+            border-top: 1px solid rgba(0, 0, 0, 0.036);
+            box-shadow: none;
+        }
+
+        .wrapper .form button {
+            margin-top: 15px;
+            width: 100%;
+            font-size: 14px;
+            font-weight: 700;
+            padding: 8px 0px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            color: white;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: all .3s ease-in-out;
+            transform: scale(1);
+            background: #0089ff;
+
+        }
+
+        .wrapper .form button:active {
+            transform: scale(.9);
+        }
+        .message{
+            font-size: 16px;
+            font-weight: 800;
+            letter-spacing: 2px;
+        }
+        .message.success{
+            color: #36ff00;
+        }
+        .message.error{
+            color: #ff0000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        {% if messages %}
+            <div class="messages">
+                {% for message in messages %}
+                <p{% if message.tags %} class="message {{ message.tags }}"{% endif %}>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form class="form" action="/" method="post">
+            {% csrf_token %}
+            <input type="number" name="room-id" id="room-id" placeholder="Enter Room Code (If You Have)">
+            <input type="text" name="player-name" id="player-name" placeholder="Enter Your Name">
+            <button id="actionBtn">Create New Room</button>
+        </form>
+    </div>
+
+    <script>
+        const roomNameInp = document.getElementById("room-id")
+        const actionBtn = document.getElementById("actionBtn")
+        roomNameInp.addEventListener('keyup', e => {
+            if (e.currentTarget.value == "") {
+                actionBtn.innerText = "Create New Room"
+            } else {
+                actionBtn.innerText = "Join"
+            }
+        })        
+    </script>
+
+
+</body>
+
+</html>
